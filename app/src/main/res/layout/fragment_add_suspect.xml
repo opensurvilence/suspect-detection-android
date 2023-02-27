@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.suspect.AddSuspectFragment">
+    tools:context=".ui.suspect.add.AddSuspectFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/iv_suspect_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/ic_launcher_foreground" />
 
             <ImageView
@@ -41,6 +41,7 @@
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
             android:hint="Name"
+            android:nextFocusDown="@id/til_suspect_age"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fl_add_image">
@@ -77,6 +78,7 @@
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
             android:hint="Place"
+            android:nextFocusDown="@id/til_suspect_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_suspect_age">
@@ -95,6 +97,7 @@
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
             android:hint="Location"
+            android:nextFocusDown="@id/til_suspect_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_suspect_place">

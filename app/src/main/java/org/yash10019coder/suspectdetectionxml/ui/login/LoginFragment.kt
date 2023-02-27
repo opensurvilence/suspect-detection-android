@@ -1,9 +1,5 @@
 package org.yash10019coder.suspectdetectionxml.ui.login
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import org.yash10019coder.suspectdetectionxml.R
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentLoginBinding
 
@@ -106,6 +107,7 @@ class LoginFragment : Fragment() {
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
             )
+            findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
         }
     }
 

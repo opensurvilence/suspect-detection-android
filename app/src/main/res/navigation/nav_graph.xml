@@ -3,27 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="org.yash10019coder.suspectdetectionxml.ui.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/homeFragment"
+        android:name="org.yash10019coder.suspectdetectionxml.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_homeFragment_to_searchSuspectFragment"
+            app:destination="@id/searchSuspectFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addSuspectFragment2"
+            app:destination="@id/addSuspectFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="org.yash10019coder.suspectdetectionxml.ui.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/searchSuspectFragment"
+        android:name="org.yash10019coder.suspectdetectionxml.ui.suspect.view.SearchSuspectFragment"
+        android:label="fragment_search_suspect"
+        tools:layout="@layout/fragment_search_suspect" />
+    <fragment
+        android:id="@+id/addSuspectFragment2"
+        android:name="org.yash10019coder.suspectdetectionxml.ui.suspect.add.AddSuspectFragment"
+        android:label="fragment_add_suspect"
+        tools:layout="@layout/fragment_add_suspect" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="org.yash10019coder.suspectdetectionxml.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
 

@@ -1,14 +1,15 @@
-package org.yash10019coder.suspectdetectionxml.ui.suspect.view
+package org.yash10019coder.suspectdetectionxml.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import org.yash10019coder.suspectdetectionxml.databinding.FragmentSearchSuspectBinding
-import org.yash10019coder.suspectdetectionxml.ui.suspect.view.list.ListViewSuspectsFragments
+import androidx.navigation.fragment.findNavController
+import org.yash10019coder.suspectdetectionxml.R
+import org.yash10019coder.suspectdetectionxml.databinding.FragmentHomeBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,15 +18,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SearchSuspectFragment.newInstance] factory method to
+ * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SearchSuspectFragment : Fragment() {
+class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentSearchSuspectBinding
-    private lateinit var viewSuspectPagerAdapter: ViewSuspectPagerAdapter
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,20 +40,19 @@ class SearchSuspectFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSearchSuspectBinding.inflate(inflater, container, false)
-        viewSuspectPagerAdapter = ViewSuspectPagerAdapter(this@SearchSuspectFragment)
-
-        binding.toolbar.addTab(binding.toolbar.newTab().setText("My Suspects"))
-        binding.toolbar.addTab(binding.toolbar.newTab().setText("All Suspects"))
-
-        binding.viewPager.adapter = viewSuspectPagerAdapter
-
-        TabLayoutMediator(binding.toolbar, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "My Suspects"
-                else -> "All Suspects"
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val photoPicker =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             }
-        }.attach()
+        binding.btAddSuspect.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_addSuspectFragment2)
+        }
+        binding.btSearchSuspect.setOnClickListener {
+            photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+        binding.btViewSuspect.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchSuspectFragment)
+        }
 
         return binding.root
     }
@@ -65,22 +64,16 @@ class SearchSuspectFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SearchSuspectFragment.
+         * @return A new instance of fragment HomeFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SearchSuspectFragment().apply {
+            HomeFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    inner class ViewSuspectPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int = 2
-
-        override fun createFragment(position: Int): Fragment = ListViewSuspectsFragments()
     }
 }

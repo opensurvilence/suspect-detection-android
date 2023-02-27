@@ -1,11 +1,14 @@
 package org.yash10019coder.suspectdetectionxml.ui.suspect.add
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.yash10019coder.suspectdetectionxml.R
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import org.yash10019coder.suspectdetectionxml.databinding.FragmentAddSuspectBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +24,8 @@ class AddSuspectFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentAddSuspectBinding
+    private lateinit var addSuspectViewModel: AddSuspectViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +40,71 @@ class AddSuspectFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_suspect, container, false)
+
+        binding = FragmentAddSuspectBinding.inflate(inflater, container, false)
+        addSuspectViewModel = ViewModelProvider(this).get(AddSuspectViewModel::class.java)
+
+        val photoPicker =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null)
+                    binding.ivSuspectImage.setImageURI(uri)
+            }
+
+
+        binding.flAddImage.setOnClickListener {
+            photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        /*binding.tilSuspectName.addOnEditTextAttachedListener {
+            if (it.editText.toString().isNotEmpty()) {
+                addSuspectViewModel.name.set(it.editText.toString())
+                it.error = null
+            } else {
+                it.error = "Name is required"
+            }
+        }
+
+        binding.tilSuspectAge.addOnEditTextAttachedListener {
+            if (it.editText.toString().isNotEmpty()) {
+                addSuspectViewModel.age.set(it.editText.toString().toInt())
+                it.error = null
+            } else {
+                it.error = "Age is required"
+            }
+        }
+
+        binding.tilSuspectPlace.addOnEditTextAttachedListener {
+            if (it.editText.toString().isNotEmpty()) {
+                addSuspectViewModel.place.set(it.editText.toString())
+                it.error = null
+            } else {
+                it.error = "Place is required"
+            }
+        }
+
+        binding.tilSuspectLocation.addOnEditTextAttachedListener {
+            if (it.editText.toString().isNotEmpty()) {
+                addSuspectViewModel.location.set(it.editText.toString())
+                it.error = null
+            } else {
+                it.error = "Location is required"
+            }
+        }
+
+        binding.tilSuspectTime.addOnEditTextAttachedListener {
+            if (it.editText.toString().isNotEmpty()) {
+                addSuspectViewModel.timeUnixTimestamp.set(it.editText.toString().toLong())
+                it.error = null
+            } else {
+                it.error = "Time is required"
+            }
+        }*/
+
+        binding.btnAddSuspect.setOnClickListener {
+
+        }
+
+        return binding.root
     }
 
     companion object {

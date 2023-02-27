@@ -1,20 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/item_number"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="1"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_suspect_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_suspect_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginStart="25dp"
+                android:text="Suspect Name"
+                app:layout_constraintBottom_toTopOf="@+id/tv_suspect_age"
+                app:layout_constraintStart_toEndOf="@+id/iv_suspect_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_suspect_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_suspect_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginStart="25dp"
+                android:text="Suspect Age"
+                app:layout_constraintBottom_toTopOf="@+id/tv_suspect_place"
+                app:layout_constraintStart_toEndOf="@+id/iv_suspect_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_suspect_name" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_suspect_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginStart="25dp"
+                android:text="Suspect Place"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_suspect_image"
+                app:layout_constraintStart_toEndOf="@+id/iv_suspect_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_suspect_age" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

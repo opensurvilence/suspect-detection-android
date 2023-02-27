@@ -1,12 +1,11 @@
-package org.yash10019coder.suspectdetectionxml.ui.suspect.view
+package org.yash10019coder.suspectdetectionxml.ui.suspect.view.list
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import org.yash10019coder.suspectdetectionxml.databinding.RowListViewSuspectsFragmentsBinding
-
-import org.yash10019coder.suspectdetectionxml.ui.suspect.view.placeholder.PlaceholderContent.PlaceholderItem
+import org.yash10019coder.suspectdetectionxml.ui.suspect.view.list.placeholder.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -27,7 +26,7 @@ class ListsViewSuspectRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.suspectName.text = item.content
     }
 
     override fun getItemCount(): Int = values.size
@@ -35,11 +34,9 @@ class ListsViewSuspectRecyclerViewAdapter(
     inner class ViewHolder(binding: RowListViewSuspectsFragmentsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
+        val suspectName = binding.tvSuspectName
+        val suspectAge = binding.tvSuspectAge
+        val suspectPlace = binding.tvSuspectPlace
     }
 
 }

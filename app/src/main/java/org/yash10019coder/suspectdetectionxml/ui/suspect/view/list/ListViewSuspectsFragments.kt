@@ -1,4 +1,4 @@
-package org.yash10019coder.suspectdetectionxml.ui.suspect.view
+package org.yash10019coder.suspectdetectionxml.ui.suspect.view.list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import org.yash10019coder.suspectdetectionxml.R
-import org.yash10019coder.suspectdetectionxml.ui.suspect.view.placeholder.PlaceholderContent
+import org.yash10019coder.suspectdetectionxml.ui.suspect.view.list.placeholder.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.
