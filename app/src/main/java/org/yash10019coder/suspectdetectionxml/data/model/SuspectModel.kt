@@ -3,7 +3,10 @@ package org.yash10019coder.suspectdetectionxml.data.model
 data class SuspectModel(
     val name: String,
     val age: Int,
-    val place: String,
+    val gender: String,
+    val info: String,
     val location: String,
-    val timeUnixTimestamp: Long,
+    val time: Long,
+    val image: String,
+    val remark: String,
 )
