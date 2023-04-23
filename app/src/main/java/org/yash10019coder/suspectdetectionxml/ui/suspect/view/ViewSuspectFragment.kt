@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import org.yash10019coder.suspectdetectionxml.databinding.FragmentSearchSuspectBinding
-import org.yash10019coder.suspectdetectionxml.ui.suspect.view.list.ListViewSuspectsFragments
+import org.yash10019coder.suspectdetectionxml.databinding.FragmentViewSuspectBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,14 +16,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SearchSuspectFragment.newInstance] factory method to
+ * Use the [ViewSuspectFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SearchSuspectFragment : Fragment() {
+class ViewSuspectFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentSearchSuspectBinding
+    private lateinit var binding: FragmentViewSuspectBinding
     private lateinit var viewSuspectPagerAdapter: ViewSuspectPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +39,8 @@ class SearchSuspectFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSearchSuspectBinding.inflate(inflater, container, false)
-        viewSuspectPagerAdapter = ViewSuspectPagerAdapter(this@SearchSuspectFragment)
+        binding = FragmentViewSuspectBinding.inflate(inflater, container, false)
+        viewSuspectPagerAdapter = ViewSuspectPagerAdapter(this@ViewSuspectFragment)
 
         binding.toolbar.addTab(binding.toolbar.newTab().setText("My Suspects"))
         binding.toolbar.addTab(binding.toolbar.newTab().setText("All Suspects"))
@@ -70,7 +69,7 @@ class SearchSuspectFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SearchSuspectFragment().apply {
+            ViewSuspectFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

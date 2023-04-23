@@ -1,13 +1,21 @@
 package org.yash10019coder.suspectdetectionxml.ui.suspect.add
 
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.yash10019coder.suspectdetectionxml.data.Result
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentAddSuspectBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,8 +54,19 @@ class AddSuspectFragment : Fragment() {
 
         val photoPicker =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                if (uri != null)
+                if (uri != null) {
                     binding.ivSuspectImage.setImageURI(uri)
+
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val base64 = withContext(Dispatchers.IO) {
+                            val inputStream = requireActivity().contentResolver.openInputStream(uri)
+                            val bytes = inputStream?.let { ByteArray(it.available()) }
+                            inputStream?.read(bytes)
+                            Base64.encodeToString(bytes, Base64.DEFAULT)
+                        }
+                        addSuspectViewModel.imageBase64.set(base64)
+                    }
+                }
             }
 
 
@@ -55,53 +74,62 @@ class AddSuspectFragment : Fragment() {
             photoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-        /*binding.tilSuspectName.addOnEditTextAttachedListener {
-            if (it.editText.toString().isNotEmpty()) {
-                addSuspectViewModel.name.set(it.editText.toString())
-                it.error = null
+        binding.tilSuspectName.editText?.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                addSuspectViewModel.name.set(it.toString())
+                binding.tilSuspectName.error = null
             } else {
-                it.error = "Name is required"
+                binding.tilSuspectName.error = "Name is required"
             }
         }
 
-        binding.tilSuspectAge.addOnEditTextAttachedListener {
-            if (it.editText.toString().isNotEmpty()) {
-                addSuspectViewModel.age.set(it.editText.toString().toInt())
-                it.error = null
+        binding.tilSuspectPlace.editText?.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                addSuspectViewModel.place.set(it.toString())
+                binding.tilSuspectPlace.error = null
             } else {
-                it.error = "Age is required"
+                binding.tilSuspectPlace.error = "Place is required"
             }
         }
 
-        binding.tilSuspectPlace.addOnEditTextAttachedListener {
-            if (it.editText.toString().isNotEmpty()) {
-                addSuspectViewModel.place.set(it.editText.toString())
-                it.error = null
+        binding.tilSuspectAge.editText?.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                addSuspectViewModel.age.set(it.toString().toInt())
+                binding.tilSuspectAge.error = null
             } else {
-                it.error = "Place is required"
+                binding.tilSuspectAge.error = "Age is required"
             }
         }
 
-        binding.tilSuspectLocation.addOnEditTextAttachedListener {
-            if (it.editText.toString().isNotEmpty()) {
-                addSuspectViewModel.location.set(it.editText.toString())
-                it.error = null
+        binding.tilSuspectLocation.editText?.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                addSuspectViewModel.location.set(it.toString())
+                binding.tilSuspectLocation.error = null
             } else {
-                it.error = "Location is required"
+                binding.tilSuspectLocation.error = "Location is required"
             }
         }
 
-        binding.tilSuspectTime.addOnEditTextAttachedListener {
-            if (it.editText.toString().isNotEmpty()) {
-                addSuspectViewModel.timeUnixTimestamp.set(it.editText.toString().toLong())
-                it.error = null
+        binding.tilSuspectTime.editText?.addTextChangedListener {
+            if (it.toString().isNotEmpty()) {
+                addSuspectViewModel.timeUnixTimestamp.set(it.toString().toLong())
+                binding.tilSuspectTime.error = null
             } else {
-                it.error = "Time is required"
+                binding.tilSuspectTime.error = "Time is required"
             }
-        }*/
+        }
 
         binding.btnAddSuspect.setOnClickListener {
-
+            CoroutineScope(Dispatchers.Main).launch {
+                val result = addSuspectViewModel.addSuspect()
+                if (result is Result.Success) {
+                    Snackbar.make(binding.root, "Suspect added successfully", Snackbar.LENGTH_SHORT)
+                        .show()
+                } else if (result is Result.Error) {
+                    Snackbar.make(binding.root, "Error adding suspect", Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
 
         return binding.root
