@@ -16,7 +16,11 @@ class LoginDataSource {
             try {
                 val login = Retrofit.apiService.login(username, password)
                 if (login.isSuccessful) {
-                    val user = LoggedInUser(UUID.randomUUID().toString(), username)
+                    val user = LoggedInUser(
+                        UUID.randomUUID().toString(),
+                        username,
+                        login.body()?.accessToken ?: ""
+                    )
                     return@withContext Result.Success(user)
                 } else {
                     val errorResModel = login.errorBody()?.string()

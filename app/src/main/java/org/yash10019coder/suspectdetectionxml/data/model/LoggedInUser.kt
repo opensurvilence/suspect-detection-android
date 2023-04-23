@@ -6,4 +6,5 @@ package org.yash10019coder.suspectdetectionxml.data.model
 data class LoggedInUser(
     val userId: String,
     val displayName: String,
+    val authToken:String,
 )

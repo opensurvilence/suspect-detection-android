@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.suspect.view.list.ListViewSuspectsFragments"
+    tools:context=".ui.suspect.view.ListViewSuspectsFragments"
     tools:listitem="@layout/row_list_view_suspects_fragments" />

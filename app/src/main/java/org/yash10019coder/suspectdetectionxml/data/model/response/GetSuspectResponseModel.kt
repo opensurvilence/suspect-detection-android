@@ -1,4 +1,4 @@
-package org.yash10019coder.suspectdetectionxml.data.model
+package org.yash10019coder.suspectdetectionxml.data.model.response
 
 
 import com.google.gson.annotations.SerializedName

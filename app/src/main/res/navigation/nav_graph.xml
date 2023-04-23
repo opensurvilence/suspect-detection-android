@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -19,9 +19,9 @@
     </fragment>
     <fragment
         android:id="@+id/searchSuspectFragment"
-        android:name="org.yash10019coder.suspectdetectionxml.ui.suspect.view.SearchSuspectFragment"
+        android:name="org.yash10019coder.suspectdetectionxml.ui.suspect.view.ViewSuspectFragment"
         android:label="fragment_search_suspect"
-        tools:layout="@layout/fragment_search_suspect" />
+        tools:layout="@layout/fragment_view_suspect" />
     <fragment
         android:id="@+id/addSuspectFragment2"
         android:name="org.yash10019coder.suspectdetectionxml.ui.suspect.add.AddSuspectFragment"

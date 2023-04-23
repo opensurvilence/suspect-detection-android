@@ -1,4 +1,4 @@
-package org.yash10019coder.suspectdetectionxml.ui.suspect.view.list.placeholder
+package org.yash10019coder.suspectdetectionxml.ui.suspect.view
 
 import java.util.ArrayList
 import java.util.HashMap

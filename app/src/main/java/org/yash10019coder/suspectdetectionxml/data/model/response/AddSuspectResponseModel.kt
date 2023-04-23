@@ -1,4 +1,4 @@
-package org.yash10019coder.suspectdetectionxml.data.model
+package org.yash10019coder.suspectdetectionxml.data.model.response
 
 data class AddSuspectResponseModel(
     val message: String,
