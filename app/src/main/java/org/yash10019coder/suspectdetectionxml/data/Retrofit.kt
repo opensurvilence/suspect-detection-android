@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Retrofit {
     //    const val BASE_URL = "http://192.168.110.116:5000"
-    const val BASE_URL = "http://172.70.111.186:5000"
-//    const val BASE_URL = "http://192.168.1.235:5000"
+//    const val BASE_URL = "http://172.70.111.186:5000"
+    const val BASE_URL = "http://192.168.5.116:5000"
 
     val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(AuthInterceptor())
