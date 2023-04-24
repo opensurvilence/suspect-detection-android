@@ -8,6 +8,7 @@ import org.yash10019coder.suspectdetectionxml.data.Retrofit
 import org.yash10019coder.suspectdetectionxml.data.model.SuspectModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.AddSuspectResponseModel
 import org.yash10019coder.suspectdetectionxml.data.Result
+import timber.log.Timber
 
 class AddSuspectViewModel : ViewModel() {
     val name = ObservableField("")
@@ -22,22 +23,29 @@ class AddSuspectViewModel : ViewModel() {
 
     suspend fun addSuspect(): Result<AddSuspectResponseModel> {
         return withContext(Dispatchers.IO) {
-            val suspectModel = SuspectModel(
-                name.get()!!,
-                age.get()!!,
-                gender.get()!!,
-                info.get()!!,
-                location.get()!!,
-                timeUnixTimestamp.get()!!,
-                imageBase64.get()!!,
-                remark.get()!!
-            )
-            val result = Retrofit.apiService.addSuspect(suspectModel)
+            try {
+                val suspectModel = SuspectModel(
+                    name.get()!!,
+                    age.get()!!,
+                    gender.get()!!,
+                    info.get()!!,
+                    location.get()!!,
+                    timeUnixTimestamp.get()!!,
+                    imageBase64.get()!!,
+                    remark.get()!!
+                )
+                val result = Retrofit.apiService.addSuspect(suspectModel)
 
-            if (result.isSuccessful) {
-                return@withContext Result.Success(result.body()!!)
-            } else {
-                return@withContext Result.Error(Exception(result.errorBody()?.string()))
+                if (result.isSuccessful) {
+                    Timber.d("Suspect added successfully")
+                    return@withContext Result.Success(result.body()!!)
+                } else {
+                    Timber.e("Error adding suspect %s", result.errorBody()?.string())
+                    return@withContext Result.Error(Exception(result.errorBody()?.string()))
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+                return@withContext Result.Error(e)
             }
         }
     }

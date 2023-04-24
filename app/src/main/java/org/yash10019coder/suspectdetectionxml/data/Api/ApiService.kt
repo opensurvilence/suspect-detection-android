@@ -1,5 +1,6 @@
 package org.yash10019coder.suspectdetectionxml.data.Api
 
+import org.yash10019coder.suspectdetectionxml.data.model.LoginModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.GetSuspectResponseModel
 import org.yash10019coder.suspectdetectionxml.data.model.SuspectModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.AddSuspectResponseModel
@@ -25,5 +26,5 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("/login")
-    suspend fun login(@Field("username") username: String,@Field("password") password: String): Response<LoginResponse>
+    suspend fun login(@Body loginModel: LoginModel): Response<LoginResponse>
 }

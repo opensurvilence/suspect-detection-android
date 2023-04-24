@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.yash10019coder.suspectdetectionxml.data.Result
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentAddSuspectBinding
+import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -123,9 +124,11 @@ class AddSuspectFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 val result = addSuspectViewModel.addSuspect()
                 if (result is Result.Success) {
+                    Timber.d("Suspect added successfully")
                     Snackbar.make(binding.root, "Suspect added successfully", Snackbar.LENGTH_SHORT)
                         .show()
                 } else if (result is Result.Error) {
+                    Timber.e(result.exception)
                     Snackbar.make(binding.root, "Error adding suspect", Snackbar.LENGTH_SHORT)
                         .show()
                 }
