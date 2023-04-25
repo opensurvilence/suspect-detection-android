@@ -73,13 +73,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_suspect_place"
+            android:id="@+id/til_suspect_gender"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginTop="16dp"
-            android:hint="Place"
+            android:hint="Gender"
             android:nextFocusDown="@id/til_suspect_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
             android:nextFocusDown="@id/til_suspect_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_suspect_place">
+            app:layout_constraintTop_toBottomOf="@+id/til_suspect_gender">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

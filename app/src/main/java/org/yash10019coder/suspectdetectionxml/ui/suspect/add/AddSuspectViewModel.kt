@@ -2,15 +2,26 @@ package org.yash10019coder.suspectdetectionxml.ui.suspect.add
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.yash10019coder.suspectdetectionxml.data.Retrofit
+import org.yash10019coder.suspectdetectionxml.data.AUTH_TOKEN_JWT
+import org.yash10019coder.suspectdetectionxml.data.Api.ApiService
+import org.yash10019coder.suspectdetectionxml.data.DataStoreUtil
 import org.yash10019coder.suspectdetectionxml.data.model.SuspectModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.AddSuspectResponseModel
 import org.yash10019coder.suspectdetectionxml.data.Result
+import retrofit2.Retrofit
 import timber.log.Timber
+import javax.inject.Inject
 
-class AddSuspectViewModel : ViewModel() {
+@HiltViewModel
+class AddSuspectViewModel @Inject constructor(
+    private val apiService: ApiService,
+    private val dataStoreUtil: DataStoreUtil
+) : ViewModel() {
     val name = ObservableField("")
     val age = ObservableField(-1)
     val place = ObservableField("")
@@ -34,7 +45,12 @@ class AddSuspectViewModel : ViewModel() {
                     imageBase64.get()!!,
                     remark.get()!!
                 )
-                val result = Retrofit.apiService.addSuspect(suspectModel)
+                val authToken = runBlocking { dataStoreUtil.getAuthToken() }
+                val result = apiService.addSuspect(
+                    authToken ?: throw Exception("Null auth token"),
+                    suspectModel
+                )
+
 
                 if (result.isSuccessful) {
                     Timber.d("Suspect added successfully")

@@ -1,5 +1,6 @@
 package org.yash10019coder.suspectdetectionxml.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,24 +10,42 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.coroutines.CoroutineDispatcher
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.yash10019coder.suspectdetectionxml.MainViewModel
 import org.yash10019coder.suspectdetectionxml.R
+import org.yash10019coder.suspectdetectionxml.SuspectDetectionApplication.Companion.dataStore
+import org.yash10019coder.suspectdetectionxml.data.AUTH_TOKEN_JWT
+import org.yash10019coder.suspectdetectionxml.data.Api.ApiService
+import org.yash10019coder.suspectdetectionxml.data.DataStoreUtil
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentLoginBinding
+import timber.log.Timber
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
     private lateinit var mainViewModel: MainViewModel
+
+    @Inject
+    lateinit var apiService: ApiService
+
+    @Inject
+    lateinit var dataStoreUtil: DataStoreUtil
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,13 +58,22 @@ class LoginFragment : Fragment() {
     ): View? {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val authToken = dataStoreUtil.getAuthToken()
+            if (authToken != null && authToken != "") {
+                Timber.d("Auth token found")
+                mainViewModel.authToken = authToken
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+            }
+        }
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(apiService))
             .get(LoginViewModel::class.java)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
@@ -61,10 +89,10 @@ class LoginFragment : Fragment() {
                 }
                 loginButton.isEnabled = loginFormState.isDataValid
                 loginFormState.usernameError?.let {
-                    usernameEditText.error = getString(it)
+                    binding.tilUsername.error = getString(it)
                 }
                 loginFormState.passwordError?.let {
-                    passwordEditText.error = getString(it)
+                    binding.tilPassword.error = getString(it)
                 }
             })
 
@@ -81,7 +109,12 @@ class LoginFragment : Fragment() {
             })
 
         val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
                 // ignore
             }
 
@@ -98,18 +131,7 @@ class LoginFragment : Fragment() {
         }
         usernameEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val authToken = loginViewModel.login(
-                        usernameEditText.text.toString(),
-                        passwordEditText.text.toString()
-                    )
-                    mainViewModel.authToken = authToken
-                }
-            }
-            false
-        }
+
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
@@ -118,7 +140,14 @@ class LoginFragment : Fragment() {
                     usernameEditText.text.toString(),
                     passwordEditText.text.toString()
                 )
+                Timber.d("authToken: $authToken")
                 mainViewModel.authToken = authToken
+                if (!authToken.isNotBlank()) {
+                    dataStoreUtil.getDataStore().edit {
+                        it[AUTH_TOKEN_JWT] = authToken
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    }
+                }
             }
         }
     }

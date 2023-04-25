@@ -1,22 +1,29 @@
 package org.yash10019coder.suspectdetectionxml.data
 
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.yash10019coder.suspectdetectionxml.data.Api.ApiService
 import org.yash10019coder.suspectdetectionxml.data.model.LoggedInUser
 import org.yash10019coder.suspectdetectionxml.data.model.LoginModel
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
-class LoginDataSource {
+class LoginDataSource @Inject constructor(
+    private val apiService: ApiService
+) {
 
     suspend fun login(username: String, password: String): Result<LoggedInUser> {
         return withContext(Dispatchers.IO) {
             try {
-                val login = Retrofit.apiService.login(LoginModel(username, password))
+                val login = apiService.login(LoginModel(username, password))
                 if (login.isSuccessful) {
                     Timber.d("Login successful")
                     val user = LoggedInUser(

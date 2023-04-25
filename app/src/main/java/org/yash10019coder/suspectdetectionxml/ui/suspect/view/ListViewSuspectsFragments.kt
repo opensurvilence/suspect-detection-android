@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import org.yash10019coder.suspectdetectionxml.data.Result
 /**
  * A fragment representing a list of Items.
  */
+@AndroidEntryPoint
 class ListViewSuspectsFragments : Fragment() {
 
     private var columnCount = 1

@@ -10,21 +10,28 @@ import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
 
     @GET("/suspects")
-    suspend fun getSuspects(): Response<List<GetSuspectResponseModel>>
+    suspend fun getSuspects(@Header("auth_token") authToken: String): Response<List<GetSuspectResponseModel>>
 
     @GET("/suspects/{id}")
-    suspend fun getSuspectById(@Path("id") id: Long): Response<GetSuspectResponseModel>
+    suspend fun getSuspectById(
+        @Header("auth_token") authToken: String,
+        @Path("id") id: Long
+    ): Response<GetSuspectResponseModel>
 
     @POST("/add/suspect")
-    suspend fun addSuspect(@Body suspectModel: SuspectModel): Response<AddSuspectResponseModel>
+    suspend fun addSuspect(
+        @Header("auth_token") authToken: String,
+        @Body suspectModel: SuspectModel
+    ): Response<AddSuspectResponseModel>
 
-    @FormUrlEncoded
     @POST("/login")
     suspend fun login(@Body loginModel: LoginModel): Response<LoginResponse>
 }

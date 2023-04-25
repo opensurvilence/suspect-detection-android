@@ -1,13 +1,13 @@
 package org.yash10019coder.suspectdetectionxml.ui.login
 
+import android.content.Context
 import android.util.Patterns
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.yash10019coder.suspectdetectionxml.R
 import org.yash10019coder.suspectdetectionxml.data.LoginRepository
 import org.yash10019coder.suspectdetectionxml.data.Result
@@ -22,15 +22,15 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     suspend fun login(username: String, password: String): String {
         // can be launched in a separate asynchronous job
-            val result = loginRepository.login(username, password)
+        val result = loginRepository.login(username, password)
 
-            if (result is Result.Success) {
-                _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-                return result.data.authToken
-            } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
-                return ""
+        if (result is Result.Success) {
+            _loginResult.value =
+                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            return result.data.authToken
+        } else {
+            _loginResult.value = LoginResult(error = R.string.login_failed)
+            return ""
         }
     }
 

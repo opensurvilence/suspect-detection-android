@@ -1,6 +1,8 @@
 package org.yash10019coder.suspectdetectionxml.ui.suspect.add
 
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +21,7 @@ import kotlinx.coroutines.withContext
 import org.yash10019coder.suspectdetectionxml.data.Result
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentAddSuspectBinding
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +33,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AddSuspectFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class AddSuspectFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -60,9 +65,10 @@ class AddSuspectFragment : Fragment() {
 
                     CoroutineScope(Dispatchers.Main).launch {
                         val base64 = withContext(Dispatchers.IO) {
-                            val inputStream = requireActivity().contentResolver.openInputStream(uri)
-                            val bytes = inputStream?.let { ByteArray(it.available()) }
-                            inputStream?.read(bytes)
+                            val bitmap= MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+                            val stream = ByteArrayOutputStream()
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                            val bytes = stream.toByteArray()
                             Base64.encodeToString(bytes, Base64.DEFAULT)
                         }
                         addSuspectViewModel.imageBase64.set(base64)
@@ -84,12 +90,12 @@ class AddSuspectFragment : Fragment() {
             }
         }
 
-        binding.tilSuspectPlace.editText?.addTextChangedListener {
+        binding.tilSuspectGender.editText?.addTextChangedListener {
             if (it.toString().isNotEmpty()) {
                 addSuspectViewModel.place.set(it.toString())
-                binding.tilSuspectPlace.error = null
+                binding.tilSuspectGender.error = null
             } else {
-                binding.tilSuspectPlace.error = "Place is required"
+                binding.tilSuspectGender.error = "Place is required"
             }
         }
 

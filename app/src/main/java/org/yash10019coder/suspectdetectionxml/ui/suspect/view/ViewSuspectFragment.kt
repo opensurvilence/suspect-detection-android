@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import org.yash10019coder.suspectdetectionxml.databinding.FragmentViewSuspectBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -19,6 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ViewSuspectFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class ViewSuspectFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
