@@ -8,6 +8,8 @@ data class GetSuspectResponseModel(
     var age: Int,
     @SerializedName("gender")
     var gender: String,
+    @SerializedName("_id")
+    var id: String,
     @SerializedName("image")
     var image: String,
     @SerializedName("info")
@@ -23,6 +25,6 @@ data class GetSuspectResponseModel(
         @SerializedName("remark")
         var remark: String,
         @SerializedName("time")
-        var time: Long
+        var time: Int
     )
 }
