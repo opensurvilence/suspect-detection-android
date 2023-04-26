@@ -3,6 +3,7 @@ package org.yash10019coder.suspectdetectionxml.data.Api
 import org.yash10019coder.suspectdetectionxml.data.model.LoginModel
 import org.yash10019coder.suspectdetectionxml.data.model.SuspectModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.AddSuspectResponseModel
+import org.yash10019coder.suspectdetectionxml.data.model.response.GetSuspectResponseModel
 import org.yash10019coder.suspectdetectionxml.data.model.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
