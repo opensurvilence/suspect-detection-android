@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.yash10019coder.suspectdetectionxml.R
 import org.yash10019coder.suspectdetectionxml.data.Result
+import org.yash10019coder.suspectdetectionxml.data.model.response.GetSuspectResponseModel
 
 /**
  * A fragment representing a list of Items.
@@ -48,7 +49,7 @@ class ListViewSuspectsFragments : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ListsViewSuspectRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = ListsViewSuspectRecyclerViewAdapter(emptyList<GetSuspectResponseModel>() as MutableList<GetSuspectResponseModel>)
             }
         }
 
@@ -62,7 +63,7 @@ class ListViewSuspectsFragments : Fragment() {
                             columnCount <= 1 -> LinearLayoutManager(context)
                             else -> GridLayoutManager(context, columnCount)
                         }
-//                        adapter = ListsViewSuspectRecyclerViewAdapter(result.data)
+                        adapter = ListsViewSuspectRecyclerViewAdapter(result.data as MutableList<GetSuspectResponseModel>)
                     }
                 }
             }
