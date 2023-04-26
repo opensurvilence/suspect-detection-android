@@ -48,7 +48,7 @@ class ListViewSuspectsFragments : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ListsViewSuspectRecyclerViewAdapter(listOf())
+                adapter = ListsViewSuspectRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
 
@@ -62,7 +62,7 @@ class ListViewSuspectsFragments : Fragment() {
                             columnCount <= 1 -> LinearLayoutManager(context)
                             else -> GridLayoutManager(context, columnCount)
                         }
-                        adapter = ListsViewSuspectRecyclerViewAdapter(result.data)
+//                        adapter = ListsViewSuspectRecyclerViewAdapter(result.data)
                     }
                 }
             }
